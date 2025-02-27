@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel Reservation</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('static/images/hotel_sea.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Ensures content starts from the top */
+            align-items: center;
+            padding-top: 50px; /* Pushes the form down slightly */
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 600px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: rgb(52, 24, 26);
+            margin-bottom: 15px;
+        }
+
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: rgb(52, 24, 26);
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background-color: rgb(15, 84, 194);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .prediction {
+            font-size: 1.5rem;
+            color: #0056b3;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-container p {
+            color: #ddd; /* Light gray for better contrast */
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .footer-container a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #4da8da; /* Light blue for links */
+        }
+
+        .footer-container a:hover {
+            color: #66c2ff; /* Brighter blue on hover */
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Title at the top of the page -->
+    <div class="title">Hotel Reservation</div>
+
+    <div class="container">
+        <form action="/" method="POST">
+            {% for label, type, placeholder in fields %}
+                <label for="input-{{ loop.index }}">{{ label }}</label>
+                <input type="{{ type }}" id="input-{{ loop.index }}" name="{{ label }}" placeholder="{{ placeholder }}" required>
+            {% endfor %}
+
+            {% for label, options in field_datalist %}
+                <label for="input-{{ loop.index }}">{{ label }}</label>
+                <select id="{{ label }}" name="{{ label }}">
+                    {% for option in options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+            {% endfor %}
+            <button type="submit" class="btn">Predict Booking Status</button>
+        </form>
+
+        {% if prediction_result %}
+            <div class="prediction {% if prediction_result == 'Canceled' %}canceled{% endif %}">
+                <h2>Prediction: {{ prediction_result }} </h2>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer with GitHub and LinkedIn links -->
+    <footer>
+        <div class="footer-container">
+            <img src="static/images/github.png" alt="GitHub" class="social-icon">
+            <p>Developed by <a href="https://github.com/toqali" target="_blank">Toqa Ghozlan</a></p>
+            
+            <img src="static/images/linkedin.png" alt="LinkedIn" class="social-icon">
+            <p>Contact Me on <a href="https://www.linkedin.com/in/toqa-ghozlan/" target="_blank">LinkedIn</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
